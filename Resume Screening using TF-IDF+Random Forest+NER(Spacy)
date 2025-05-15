@@ -1,0 +1,48 @@
+import pandas as pd
+import spacy
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+df = pd.read_csv("C:\\Users\\Vaibhav Singh\\OneDrive\\UpdateResumeDataset.csv")
+df.head(3)
+
+x = df['Resume']
+y = df['Category']
+
+# TF-IDF
+vectorizer = TfidfVectorizer()
+x_vec = vectorizer.fit_transform(x)
+
+#Train
+model = RandomForestClassifier()
+model.fit(x_vec, y)
+
+#NER for skill extraction
+nlp = spacy.load("en_core_web_sm")
+doc = nlp(x.iloc[0])
+for ent in doc.ents:
+    if ent.label_ == "ORG" or ent.label_ == "SKILLS":
+        print(ent.text, ent.label_)
+
+import joblib
+joblib.dump(model, "Resume Screening.pkl") 
+joblib.dump(vectorizer, "vectorizer.pkl")
+
+#Load model and vectorizer
+model = joblib.load("Resume Screening.pkl")
+vectorizer = joblib.load("vectorizer.pkl")
+
+new_resume = """SKILLS: - 1) Team leading 2) Self-motivated 3) Hard working Ã¢ÂÂ– Strengths: Ready to learn new Programming Languages, Punctual, Discipline, Respectfulness. DECLARATION:- I hereby inform you that all the statement made above are true with the best of my knowledge and belief. Education Details 
+August 2014 to July 2017 MCA Computer Sciene Amravati, Maharashtra SGBAU, Amaravti
+Java Web Developer 
+
+
+Skill Details 
+Core Java,JSP,Servlet,Spring,Hibernate,Struts,Javascript- Exprience - 6 monthsCompany Details 
+company - Salcluster Technologies
+description - 1.  I am Java web developer
+2. Jsp , servlet, Sprinng MVC Technologies"""
+
+new_vec = vectorizer.transform([new_resume])
+pred = model.predict(new_vec)
+print("Predicted Category:", pred[0])
