@@ -1,31 +1,21 @@
 # Machine-Learning-project-2
-Resume Screening project using TF-IDF, Random Forest, NER Spacy
-This project automates the process of resume screening using classic NLP and ML techniques. It classifies resumes into job categories using TF-IDF vectorization, Random Forest classifier, and extracts key skills using spaCy's Named Entity Recognition (NER).
+# Resume Screening using TF-IDF, Random Forest, and spaCy NER
 
-## Demo
+## Overview
+This project automates the resume screening process by using a combination of NLP and ML. It extracts relevant candidate details using spaCy NER and uses TF-IDF + Random Forest to match resumes to job descriptions.
 
-Input: Raw text resume data  
-Output:  
-- Predicted job category  
-- Extracted skills/entities from resume
+## Key Features
+- Extracts structured data from resumes: Name, Skills, Education, Experience, etc.
+- Uses TF-IDF to vectorize resumes and job descriptions.
+- Applies Random Forest Classifier to rank resumes based on job-fit.
+- Outputs the most suitable resumes for a given job post.
 
+## Technologies Used
+- Python
+- spaCy (NER)
+- Scikit-learn (TF-IDF, Random Forest)
+- Pandas, NumPy
+- Resume parsing tools (docx2txt, pdfplumber, etc.)
 
-## Tech Stack
-
-- Python 3
-- Libraries:
-  - pandas, numpy
-  - scikit-learn
-  - spaCy
-## Project Flow
-
-1. *Data Loading*
-   - Read resumes and job categories from CSV.
-2. *TF-IDF Vectorization*
-   - Transform resume text into numerical vectors.
-3. *Model Training*
-   - Train a RandomForestClassifier on the vectorized text.
-4. *NER for Skill Extraction*
-   - Use spaCy to extract relevant named entities (skills, technologies, etc.)
-5. *Prediction*
-   - Predict categories for new/unseen resumes.
+## Use Case
+Ideal for recruiters and HR tools to speed up the hiring process by filtering top-matching candidates using AI-based techniques.
